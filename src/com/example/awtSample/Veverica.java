@@ -44,14 +44,27 @@ public class Veverica {
         desnaRuka.savij();
         System.out.println(ime + ": je savila desnu ruku.");
     }
+
+    public void proveriDaLiMozeDaDrziNesto(Ruka ruka) {
+        if (ruka.jeIspruzena()) {
+            System.out.println(ime + ": je ispustila " + staDrzi);
+            staDrzi = "NISTA";
+        }
+    }
+
     public void ispruziLevuRuku() {
         levaRuka.ispruzi();
         System.out.println(ime + ": je ispruzila levu ruku.");
+
+        proveriDaLiMozeDaDrziNesto(desnaRuka);
     }
     public void ispruziDesnuRuku() {
         desnaRuka.ispruzi();
         System.out.println(ime + ": je ispruzila desnu ruku.");
+
+        proveriDaLiMozeDaDrziNesto(levaRuka);
     }
+
     public void pridrzi(String sta) {
         if (levaRuka.jeSavijena() || desnaRuka.jeSavijena()) {
          staDrzi = sta;
@@ -59,5 +72,70 @@ public class Veverica {
         } else {
             System.out.println(ime + ": ne moze da pridrzi " + sta);
         }
+    }
+    private String vevericaObeRukeIspruzene() {
+        return "      |\\_/|\n"         +
+                "     ( ^ ^ )\n"        +
+                "    __\\ Y / __  __ \n" +
+                "  O__       __O/  |\n" +
+                "     \\   /    / _/\n" +
+                "     /    \\ _/  /\n"  +
+                "   _/ /\\\\  \\_/\n"   +
+                "  /__/    \\__\\\n";
+    }
+
+    private String vevericaDesnaRukaSavijena() {
+        return "      |\\_/|\n"         +
+                "     ( ^ ^ )\n"        +
+                "    __\\ Y / __  __ \n" +
+                "  /        __O/  | \n" +
+                "  \\    \\@ /  / _/\n" +
+                "   \\_/   \\_/   /\n"  +
+                "  _/ /\\\\ \\ __/ \n"  +
+                " /__/   \\__\\";
+     }
+
+    private String vevericaLevaRukaSavijena() {
+        return "      |\\_/|\n"         +
+                "     ( ^ ^ )\n"        +
+                "    __\\ Y /_    ___\n" +
+                "  O__      \\  /   |\n"+
+                "     \\ @/  / /  _/\n" +
+                "    /   \\_/_/  /\n"   +
+                "  _/ /\\\\ \\__/\n"    +
+                " /__/   \\__\\";
+    }
+
+    private String vevericaObeRukeSavijene() {
+        return "      |\\_/|\n"         +
+                "     ( ^ ^ )\n"        +
+                "    __\\ Y /_    ___\n" +
+                "  /        \\  /   |\n"+
+                "  \\   \\@/  / / _/ \n"+
+                "   \\  / \\_/_/ / \n"  +
+                "   _/ /\\\\ \\_/ \n"   +
+                "  /__/   \\__\\";
+    }
+    private String getVevericaASCIIArt() {
+        if (levaRuka.jeSavijena() && desnaRuka.jeSavijena()) {
+            return vevericaObeRukeSavijene();
+        }
+        if (levaRuka.jeSavijena()) {
+            return vevericaLevaRukaSavijena();
+        }
+        if (desnaRuka.jeSavijena()){
+            return vevericaDesnaRukaSavijena();
+        }
+        return vevericaObeRukeIspruzene();
+    }
+
+    @Override
+    public String toString() {
+        String vevericaASCII = getVevericaASCIIArt();
+
+        if (staDrzi.equals("NISTA")) {
+            vevericaASCII = vevericaASCII.replace("@"," ");
+        }
+        return vevericaASCII;
     }
 }
